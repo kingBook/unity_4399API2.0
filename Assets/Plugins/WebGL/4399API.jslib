@@ -77,7 +77,20 @@ var apiObject={
 			datas+=data.data.currentPage+",";
 			datas+=data.data.totalPage+",";
 			datas+=data.data.hasNext+",";
-			//datas+=data.data.
+			
+			datas+="[";
+			var list=data.data.list;
+			for(var i=0;i<list.length;i++){
+				var element=list[i];
+				datas+=element.uId+",";
+				datas+=element.userName+",";
+				datas+=element.rank+",";
+				datas+=element.score;
+				if(i<list.length-1){
+					datas+="|";
+				}
+			}
+			datas+="]";
 			SendMessage('API4399', 'getRankingCallback',datas);
 		}
 		window.h5api.getRanking(callback);
@@ -101,6 +114,20 @@ var apiObject={
 			var datas="";
 			datas+=data.code+",";
 			
+			datas+="[";
+			var list=data.data.list;
+			for(var i=0;i<list.length;i++){
+				var element=list[i];
+				datas+=element.uId+",";
+				datas+=element.userName+",";
+				datas+=element.isMe+",";
+				datas+=element.rank+",";
+				datas+=element.score;
+				if(i<list.length-1){
+					datas+="|";
+				}
+			}
+			datas+="]";
 			SendMessage('API4399', 'getNearRankingCallback',datas);
 		}
 		window.h5api.getNearRanking(callback);
