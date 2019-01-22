@@ -37,7 +37,12 @@ var apiObject={
 	 * @param {String} uId 用户编号
 	 */
 	getUserAvatar:function(uId){
-		return window.h5api.getUserAvatar(uId);
+		var path=window.h5api.getUserAvatar(Pointer_stringify(uId));
+		
+		var bufferSize=lengthBytesUTF8(path)+1;
+		var buffer=_malloc(bufferSize);
+		stringToUTF8(path,buffer,bufferSize);
+		return buffer;
 	},
 	
 	/**
@@ -45,11 +50,21 @@ var apiObject={
 	 * @param {String} uId 用户编号
 	 */
 	getUserSmallAvatar:function(uId){
-		return window.h5api.getUserSmallAvatar(uId);
+		var path=window.h5api.getUserSmallAvatar(Pointer_stringify(uId));
+		
+		var bufferSize=lengthBytesUTF8(path)+1;
+		var buffer=_malloc(bufferSize);
+		stringToUTF8(path,buffer,bufferSize);
+		return buffer;
 	},
 	
 	getUserBigAvatar:function(uId){
-		return window.h5api.getUserBigAvatar(uId);
+		var path=window.h5api.getUserBigAvatar(Pointer_stringify(uId));
+		
+		var bufferSize=lengthBytesUTF8(path)+1;
+		var buffer=_malloc(bufferSize);
+		stringToUTF8(path,buffer,bufferSize);
+		return buffer;
 	},
 	
 	//===========================================积分排行榜API===============
@@ -59,9 +74,10 @@ var apiObject={
 	},
 	submitRanking:function(score){
 		function callback(data){
+			console.log(data);
 			var datas="";
 			datas+=data.code+",";
-			datas+=data.my.uid+",";
+			datas+=data.my.uId+",";
 			datas+=data.my.userName+",";
 			datas+=data.history.rank+",";
 			datas+=data.history.score;
@@ -78,7 +94,6 @@ var apiObject={
 			datas+=data.data.totalPage+",";
 			datas+=data.data.hasNext+",";
 			
-			datas+="[";
 			var list=data.data.list;
 			for(var i=0;i<list.length;i++){
 				var element=list[i];
@@ -90,7 +105,6 @@ var apiObject={
 					datas+="|";
 				}
 			}
-			datas+="]";
 			SendMessage('API4399', 'getRankingCallback',datas);
 		}
 		window.h5api.getRanking(callback);
@@ -114,7 +128,6 @@ var apiObject={
 			var datas="";
 			datas+=data.code+",";
 			
-			datas+="[";
 			var list=data.data.list;
 			for(var i=0;i<list.length;i++){
 				var element=list[i];
@@ -127,7 +140,6 @@ var apiObject={
 					datas+="|";
 				}
 			}
-			datas+="]";
 			SendMessage('API4399', 'getNearRankingCallback',datas);
 		}
 		window.h5api.getNearRanking(callback);
