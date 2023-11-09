@@ -1,9 +1,8 @@
 var apiObject={
-	
 	canPlayAd:function(){
 		function callback(data) {
 			var datas=data.canPlayAd+","+data.remain;
-			SendMessage('API4399', 'canPlayAdCallback',datas);
+			unityInstance.SendMessage('API4399', 'canPlayAdCallback',datas);
 		}
 		window.h5api.canPlayAd(callback);
 	},
@@ -11,7 +10,7 @@ var apiObject={
 	playAd:function(){
 		function callback(data){
 			var datas=data.code+","+data.message;
-			SendMessage('API4399', 'playAdCallback',datas);
+			unityInstance.SendMessage('API4399', 'playAdCallback',datas);
 		}
 		window.h5api.playAd(callback);
 	},
@@ -27,7 +26,7 @@ var apiObject={
 	login:function(){
 		function callback(data){
 			var datas=data.uId+","+data.userName;
-			SendMessage('API4399', 'loginCallback',datas);
+			unityInstance.SendMessage('API4399', 'loginCallback',datas);
 		}
 		window.h5api.login(callback);
 	},
@@ -81,7 +80,7 @@ var apiObject={
 			datas+=data.my.userName+",";
 			datas+=data.history.rank+",";
 			datas+=data.history.score;
-			SendMessage('API4399', 'submitRankingCallback',datas);
+			unityInstance.SendMessage('API4399', 'submitRankingCallback',datas);
 		}
 		window.h5api.submitRanking(score,callback);
 	},
@@ -105,7 +104,7 @@ var apiObject={
 					datas+="|";
 				}
 			}
-			SendMessage('API4399', 'getRankingCallback',datas);
+			unityInstance.SendMessage('API4399', 'getRankingCallback',datas);
 		}
 		window.h5api.getRanking(callback);
 	},
@@ -118,7 +117,7 @@ var apiObject={
 			datas+=data.data.userName+",";
 			datas+=data.data.rank+",";
 			datas+=data.data.score;
-			SendMessage('API4399', 'getMyRankingCallback',datas);
+			unityInstance.SendMessage('API4399', 'getMyRankingCallback',datas);
 		}
 		window.h5api.getMyRanking(callback);
 	},
@@ -140,7 +139,7 @@ var apiObject={
 					datas+="|";
 				}
 			}
-			SendMessage('API4399', 'getNearRankingCallback',datas);
+			unityInstance.SendMessage('API4399', 'getNearRankingCallback',datas);
 		}
 		window.h5api.getNearRanking(callback);
 	}

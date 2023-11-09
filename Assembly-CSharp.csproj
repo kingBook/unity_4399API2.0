@@ -50,6 +50,7 @@
      <Folder Include="Assets" />
      <None Include="Assets\Resources\BillingMode.json" />
      <Folder Include="Assets\API4399\Plugins\WebGL" />
+     <Folder Include="Assets\Scenes\SampleScene" />
      <Folder Include="Assets\API4399\Plugins" />
      <Folder Include="Assets\Resources" />
      <Folder Include="Assets\Scripts" />
