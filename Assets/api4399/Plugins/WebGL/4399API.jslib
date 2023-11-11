@@ -1,4 +1,11 @@
 var apiObject={
+	/**
+	 * 覆盖内置的方法（有外部通讯导致审核无法通过）
+	 */
+	JS_WebRequest_Send:function (request, ptr, length) {
+		
+	},
+	
 	canPlayAd:function(){
 		function callback(data) {
 			var datas=data.canPlayAd+","+data.remain;
