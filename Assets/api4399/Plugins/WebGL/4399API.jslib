@@ -1,6 +1,6 @@
 var apiObject={
 	/**
-	 * 覆盖内置的方法（有外部通讯导致审核无法通过）
+	 * 覆盖内置的方法（有外部通讯导致4399审核无法通过）
 	 */
 	JS_WebRequest_Send:function (request, ptr, length) {
 		
@@ -64,6 +64,10 @@ var apiObject={
 		return buffer;
 	},
 	
+	/**
+	 * 获得用户大头像地址，高宽为200*200像素
+	 * @param {String} uid 用户编号
+	 */
 	getUserBigAvatar:function(uId){
 		var path=window.h5api.getUserBigAvatar(Pointer_stringify(uId));
 		
@@ -73,83 +77,31 @@ var apiObject={
 		return buffer;
 	},
 	
-	//===========================================积分排行榜API===============
-	//A方案
-	showRanking:function(){
-		window.h5api.showRanking();
-	},
-	submitRanking:function(score){
-		function callback(data){
-			console.log(data);
-			var datas="";
-			datas+=data.code+",";
-			datas+=data.my.uId+",";
-			datas+=data.my.userName+",";
-			datas+=data.history.rank+",";
-			datas+=data.history.score;
-			unityInstance.SendMessage('API4399', 'submitRankingCallback',datas);
-		}
-		window.h5api.submitRanking(score,callback);
-	},
-	//B方案
-	getRanking:function(){
-		function callback(data){
-			var datas="";
-			datas+=data.code+",";
-			datas+=data.data.currentPage+",";
-			datas+=data.data.totalPage+",";
-			datas+=data.data.hasNext+",";
-			
-			var list=data.data.list;
-			for(var i=0;i<list.length;i++){
-				var element=list[i];
-				datas+=element.uId+",";
-				datas+=element.userName+",";
-				datas+=element.rank+",";
-				datas+=element.score;
-				if(i<list.length-1){
-					datas+="|";
-				}
-			}
-			unityInstance.SendMessage('API4399', 'getRankingCallback',datas);
-		}
-		window.h5api.getRanking(callback);
+	//=========================================== (新) 排行榜API start=============
+	/**
+	 * 展示排行榜面板
+	 */
+	showRankList:function(){
+		window.h5api.showRankList();
 	},
 	
-	getMyRanking:function(){
-		function callback(data){
+	/**
+	 * 提交排名
+	 * @param {Number} rankId 排行榜 id
+	 * @param {Number} score 分数
+	 */
+	submitRankScore:function(rankId, score){
+		function callback(res){
 			var datas="";
-			datas+=data.code+",";
-			datas+=data.data.uId+",";
-			datas+=data.data.userName+",";
-			datas+=data.data.rank+",";
-			datas+=data.data.score;
-			unityInstance.SendMessage('API4399', 'getMyRankingCallback',datas);
-		}
-		window.h5api.getMyRanking(callback);
-	},
-	
-	getNearRanking:function(){
-		function callback(data){
-			var datas="";
-			datas+=data.code+",";
-			
-			var list=data.data.list;
-			for(var i=0;i<list.length;i++){
-				var element=list[i];
-				datas+=element.uId+",";
-				datas+=element.userName+",";
-				datas+=element.isMe+",";
-				datas+=element.rank+",";
-				datas+=element.score;
-				if(i<list.length-1){
-					datas+="|";
-				}
-			}
-			unityInstance.SendMessage('API4399', 'getNearRankingCallback',datas);
-		}
-		window.h5api.getNearRanking(callback);
+			datas+=res.code+",";
+			datas+=res.msg+",";
+			datas+=res.data.score+",";
+			datas+=res.data.rank;
+			unityInstance.SendMessage('API4399', 'submitRankScoreCallback', datas);
+	    }
+		window.h5api.submitRankScore(rankId, score, callback);
 	}
+	//=========================================== (新) 排行榜API end===============
 	
 };
 mergeInto(LibraryManager.library, apiObject);
